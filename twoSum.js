@@ -11,19 +11,19 @@
  */
 
 
-let twoSum = function (nums,target) {
-	let result = [];
-	for(let i=0;i<nums.length;i++){
-		let an = target - nums[i];
-		for(let j=i+1;j<nums.length;j++){
-			if(an === nums[j]){
-				result.push(i,j);
-				break;
-			}
-		}
-	}
-	return result;
+let twoSum = function(nums, target) {
+    let result = [];
+    for (let i = 0; i < nums.length; i++) {
+        let an = target - nums[i];
+        for (let j = i + 1; j < nums.length; j++) {
+            if (an === nums[j]) {
+                result.push(i, j);
+                break;
+            }
+        }
+    }
+    return result;
 }
 
-let nums = [2,7,11,15];
-console.log(twoSum(nums,26));
+let nums = [2, 7, 11, 15];
+console.log(twoSum(nums, 26));
