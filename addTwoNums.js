@@ -6,6 +6,9 @@
  * Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
  * Output: 7 -> 0 -> 8
  * Subscribe to see which companies asked this question.
+ * ====================
+ * ------Easy----------
+ * ====================
  */
 
 /**
@@ -21,36 +24,36 @@
  * @return {ListNode}
  */
 
+ class ListNode {
+    constructor(val){
+        this.val = val;
+        this.next = null;
+    }
+ }
+
 var addTwoNumbers = function(l1, l2) {
 
-    let root_node = {
-        val: l1.val + l2.val
-    };
+    let root_node = new ListNode(l1.val + l2.val);
+
     let current = root_node;
 
     while (l1.next && l2.next) {
         l1 = l1.next;
         l2 = l2.next;
-        let node = {};
-        node.val = l1.val + l2.val;
+        let node = new ListNode(l1.val + l2.val);
         current.next = node;
         current = node;
     }
 
     while (l1.next) {
-        let node = {
-            val: l1.next.val
-        }
+        let node = new ListNode(l1.next.val);
         current.next = node;
         current = node;
         l1 = l1.next;
-
     }
 
     while (l2.next) {
-        let node = {
-            val: l2.next.val
-        }
+        let node = new ListNode(l2.next.val);
         current.next = node;
         current = node;
         l2 = l2.next;
@@ -71,7 +74,6 @@ var addTwoNumbers = function(l1, l2) {
     }
 
     return root_node;
-
 };
 
 let l1 = {
