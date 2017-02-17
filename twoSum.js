@@ -13,13 +13,18 @@
 
 let twoSum = function(nums, target) {
     let result = [];
+    let map = {};
     for (let i = 0; i < nums.length; i++) {
         let an = target - nums[i];
-        for (let j = i + 1; j < nums.length; j++) {
-            if (an === nums[j]) {
-                result.push(i, j);
+        let diff = map[nums[i]];
+        if(diff){
+            if(diff.diff === nums[i]){
+                result.push(diff.index);
+                result.push(i);
                 break;
             }
+        }else{
+            map[an] = {index:i,diff:an};
         }
     }
     return result;
