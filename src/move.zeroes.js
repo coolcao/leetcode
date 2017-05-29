@@ -15,33 +15,50 @@
  * @param {number[]} nums
  * @return {void} Do not return anything, modify nums in-place instead.
  */
-const moveZeroes = function(nums) {
+const moveZeroes = function (nums) {
     let sum = 0;
     const length = nums.length;
+    const tmp = [];
 
-    const swap = function(a, b) {
-        let tmp = nums[a];
-        nums[a] = nums[b];
-        nums[b] = tmp;
+    nums.reduceRight((pre, current) => {
+        if (current === 0) {
+            pre.push(current);
+        } else {
+            pre.unshift(current);
+        }
+        return pre;
+    }, tmp);
+
+    for (let i = 0; i < tmp.length; i++) {
+        nums[i] = tmp[i];
     }
 
-    for (let i = 0; i < length; i++) {
-
-        if (i + sum === length) {
-            return;
-        }
-        if (nums[i] === 0) {
-            sum += 1;
-            while (nums[length - sum] === 0) {
-                sum += 1;
-            }
-            swap(i, length - sum);
-        }
-    }
 };
 
-const array = [0, 1, 2, 0, 1, 9, 0, 8, 7, 4, 0, 0, 0, 0];
+/**
+ * 严格意义上说，上面这个方法是错的，因为额外用的了tmp数组
+ * 其实，还有一种更简单的方法，将所有不为0的元素往前移，后面的所有位补0即可
+ */
 
-moveZeroes(array);
+const moveZeroes2 = function (nums) {
+    const length = nums.length;
+    let sum = 0;
+    for (let i = 0; i < length; i++) {
+        if (nums[i] === 0) {
+            sum += 1;
+        } else {
+            nums[i - sum] = nums[i];
+        }
+    }
 
-console.log(array);
+    for (let i = length - 1; sum > 0; i--) {
+        nums[i] = 0;
+        sum -= 1;
+    }
+}
+
+const nums = [0, 1, 1, 2, 0, 3, 4, 0, 20, 0];
+
+moveZeroes2(nums);
+
+console.log(nums);
