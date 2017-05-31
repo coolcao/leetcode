@@ -38,6 +38,9 @@
  * @return {number}
  */
 const findTilt = function(root) {
+    if(!root){
+        return 0;
+    }
     const reduces = [];
     const q = [root];
 

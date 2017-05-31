@@ -1,14 +1,17 @@
 'use strict';
 
-class TreeNode {
-    constructor(val) {
-        this.val = val;
-        this.left = this.right = null;
-    }
-}
+/**
+ * Given a binary tree, find its maximum depth.
+
+    The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
+
+    Subscribe to see which companies asked this question.
+ */
+
+const utils = require('./utils');
 
 const maxDepth = function(root) {
-    if(!root.val){
+    if(!root){
         return 0;
     }
     root.deepth = 1;
@@ -31,48 +34,7 @@ const maxDepth = function(root) {
     }
 }
 
-const root = {
-    "left": {
-        "left": {
-            "val": "sdlfk"
-        },
-        "right": {
-            "right": {
-                "left": {
-                    "val": "dkjdslk"
-                },
-                "right": {
-                    "val": "sldfk"
-                },
-                "val": "asdfk"
-            },
-            "val": "aaa"
-        },
-        "val": "l1"
-    },
-    "right": {
-        "left": {
-            "left": {
-                "val": "dksjl"
-            },
-            "right": {
-                "left": {
-                    "val": "dskkd"
-                },
-                "right": {
-                    "val": "sdlfk"
-                },
-                "val": "kdsf"
-            },
-            "val": "dks"
-        },
-        "val": "klsdfj"
-    },
-    "val": "root"
-};
 
-const node = {
-    val: 'dsk'
-}
-
-console.log(maxDepth({}));
+const root = utils.createTree([1,2,3,null,4,5]);
+console.log(root);
+console.log(maxDepth(root));

@@ -1,5 +1,7 @@
 'use strict';
 
+const utils = require('./utils');
+
 /**
  * Invert a binary tree.
 
@@ -34,42 +36,31 @@
  */
 var invertTree = function(root) {
 
-    const nodes = [];
-    nodes.push(root);
-    if (root.left) {
-        nodes.push(root.left);
-    }
-    if (root.right){
-        nodes.push(root.right);
+    if (!root) {
+        return null;
     }
 
+    const nodes = [root];
+
     while (nodes.length > 0) {
-        let node = nodes.pop();
+        let node = nodes.shift();
         let tmp = node.left;
         node.left = node.right;
         node.right = tmp;
+
+        if (node.left) {
+            nodes.push(node.left);
+        }
+        if (node.right) {
+            nodes.push(node.right);
+        }
     }
 
 
     return root;
 };
 
-const root = {
-    val: 1,
-    left: {
-        val: 2,
-        left: {
-            val: 4,
-            left: null,
-            right: null
-        },
-        right: null
-    },
-    right: {
-        val: 3,
-        left: null,
-        right: null
-    }
-};
+const root = utils.createTree([4, 1, null, 2, null, 3]);
 
-console.log(JSON.stringify(invertTree(root),null,2));
+console.log(JSON.stringify(root));
+console.log(JSON.stringify(invertTree(root)));
