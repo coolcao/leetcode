@@ -55,7 +55,6 @@ var titleToNumber = function(s) {
     for (let i = length - 1; i >= 0; i--) {
         arr.push(s.charAt(i));
     }
-    console.log(arr);
     let sum = 0;
     for(let i=0;i<length;i++){
         sum += obj[arr[i]] * Math.pow(26,i);
@@ -63,4 +62,15 @@ var titleToNumber = function(s) {
     return sum;
 };
 
+const titleToNumber2 = function (s) {
+    let sum = 0;
+    const length = s.length;
+    for(let i=length-1,j=0;i>=0;i--){
+        sum += (s.charCodeAt(i)-64)*Math.pow(26,j);
+        j += 1;
+    }
+    return sum;
+}
+
 console.log(titleToNumber('AB'));
+console.log(titleToNumber2('AB'));
