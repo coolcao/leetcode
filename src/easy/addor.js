@@ -70,13 +70,12 @@ const addor2 = function(x, k) {
     }
     return result;
 
-    
+
 }
 
 console.time('loop');
-console.log(addor(5,1500032));
+console.log(addor(5,150003200));
 console.timeEnd('loop');
 console.time('time');
-console.log(addor2(5,1500032));
+console.log(addor2(5,150003200));
 console.timeEnd('time');
-
