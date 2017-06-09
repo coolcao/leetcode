@@ -37,49 +37,47 @@
  * @param {TreeNode} root
  * @return {number}
  */
+
+const utils = require('../utils/utils');
+
 const findTilt = function(root) {
+    const sum = function (node) {
+        let s = 0;
+        if(node){
+            s += (node.val + sum(node.left) + sum(node.right));
+        }
+        return s;
+    }
+    const tilt = function (node) {
+        if(!node.left && !node.right){
+            return 0;
+        }else if(!node.left){
+            return Math.abs(sum(node.right));
+        }else if(!node.right){
+            return Math.abs(sum(node.left));
+        }else{
+            return Math.abs(sum(node.left) - sum(node.right));
+        }
+    }
+    let _s = 0;
     if(!root){
         return 0;
     }
-    const reduces = [];
     const q = [root];
-
     while (q.length > 0) {
         const node = q.pop();
-        if(node.left && node.right){
+        _s += tilt(node);
+        if (node.left) {
             q.push(node.left);
-            q.push(node.right);
-            reduces.push(Math.abs(node.left.val - node.right.val));
-        }else if(node.left){
-            reduces.push(node.left.val);
-            q.push(node.left);
-        }else if(node.right){
-            reduces.push(node.right.val);
+        }
+        if (node.right) {
             q.push(node.right);
         }
     }
-
-    return reduces.reduce(function (pre,current) {
-        pre += current;
-        return pre;
-    },0);
-
+    return _s;
 };
 
-const root = {
-    val: 1,
-    left:{
-        val: 2,
-        right: {
-            val: 4
-        }
-    },
-    right:{
-        val: 3
-    }
-};
-
-
+const root = utils.createTree([-8,3,0,-8,null,null,null,null,-1,null,8]);
 console.log(findTilt(root));
 
 

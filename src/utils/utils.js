@@ -25,7 +25,7 @@ const createTree = function (array) {
             if(array[i]!==null && array[i]!==undefined){
                 left =  new TreeNode(array[i]);
             }
-            if(array[i+1]!==null && array[i]!== undefined){
+            if(array[i+1]!==null && array[i+1]!== undefined){
                 right = new TreeNode(array[i+1]);
             }
 
