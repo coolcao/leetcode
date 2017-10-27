@@ -79,7 +79,6 @@ const findTilt = function(root) {
 
 const findTilt2 = function(root) {
     const tile = function(node) {
-
         if (node.left) {
             tile(node.left);
         }
@@ -98,5 +97,5 @@ const findTilt2 = function(root) {
     return result;
 }
 
-const root = utils.createTree([1,2,3,4]);
+const root = utils.createTree([1, 2, 3, 4]);
 console.log(findTilt2(root));

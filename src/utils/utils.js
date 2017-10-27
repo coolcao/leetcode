@@ -44,6 +44,19 @@ const createTree = function (array) {
     return root;
 };
 
+const expandTree = function(root) {
+    const q = [root];
+    const array = [];
+    while(q.length>0) {
+        const node = q.shift();
+        array.push(node.val);
+        if (node.left)  q.push(node.left);
+        if (node.right) q.push(node.right);
+    }
+    return array;
+}
+
 module.exports = {
-    createTree
+    createTree,
+    expandTree,
 }
