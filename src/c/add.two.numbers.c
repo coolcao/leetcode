@@ -74,39 +74,91 @@ struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
   return head;
 }
 
+// 采用递归的形式进行计算
+struct ListNode* add(struct ListNode* l1, struct ListNode* l2, int carry) {
+  struct ListNode* head = NULL;
+  if (l1 && l2) {
+    int sum = l1->val + l2->val + carry;
+    if (sum > 9) {
+      carry = sum / 10;
+      sum = sum % 10;
+    } else {
+      carry = 0;
+    }
+    head = makeNode(sum, NULL);
+    head->next = add(l1->next, l2->next, carry);
+  } else if (l1) {
+    int sum = l1->val + carry;
+    if (sum > 9) {
+      carry = sum / 10;
+      sum = sum % 10;
+    } else {
+      carry = 0;
+    }
+    head = makeNode(sum, NULL);
+    head->next = add(l1->next, NULL, carry);
+  } else if (l2) {
+    int sum = l2->val + carry;
+    if (sum > 9) {
+      carry = sum / 10;
+      sum = sum % 10;
+    } else {
+      carry = 0;
+    }
+    head = makeNode(sum, NULL);
+    head->next = add(l2->next, NULL, carry);
+  } else if (carry > 0) {
+    head = makeNode(carry, NULL);
+  }
+  return head;
+}
+struct ListNode* addTwoNumbers2(struct ListNode* l1, struct ListNode* l2) {
+  int carry = 0;
+  return add(l1, l2, carry);
+}
+
 void printNode(struct ListNode* node) {
   struct ListNode* head = node;
+  printf("[");
   while (head) {
-    printf("%d->", head->val);
+    if (head->next) {
+      printf("%d,", head->val);
+    } else {
+      printf("%d", head->val);
+    }
     head = head->next;
   }
-  printf("\n");
+  printf("]\n");
+}
+
+struct ListNode* createListFromArray(int* a, int length) {
+  struct ListNode* head = NULL;
+  struct ListNode* current = NULL;
+  for (int i = 0; i < length; i++) {
+    struct ListNode* node = makeNode(a[i], NULL);
+    if (current) {
+      current->next = node;
+      current = node;
+    } else {
+      current = node;
+      head = node;
+    }
+  }
+  return head;
 }
 
 int main(int argc, char const* argv[]) {
-  struct ListNode* list1 = makeNode(1, NULL);
-  struct ListNode* list11 = makeNode(4, NULL);
-  struct ListNode* list12 = makeNode(9, NULL);
-  struct ListNode* list13 = makeNode(7, NULL);
-  struct ListNode* list14 = makeNode(6, NULL);
+  #define length1 7
+  #define length2 6
+  int a[length1] = {3, 2, 4, 6, 1, 4, 7};
+  int b[length2] = {4, 1, 7, 5, 9, 1};
+  struct ListNode* l1 = createListFromArray(a, length1);
+  struct ListNode* l2 = createListFromArray(b, length2);
 
-  list13->next = list14;
-  list12->next = list13;
-  list11->next = list12;
-  list1->next = list11;
+  printNode(l1);
+  printNode(l2);
 
-  struct ListNode* list2 = makeNode(9, NULL);
-  struct ListNode* list21 = makeNode(1, NULL);
-  struct ListNode* list22 = makeNode(6, NULL);
-  struct ListNode* list23 = makeNode(2, NULL);
-  list22->next = list23;
-  list21->next = list22;
-  list2->next = list21;
-
-  printNode(list1);
-  printNode(list2);
-
-  struct ListNode* result = addTwoNumbers(list1, list2);
+  struct ListNode* result = addTwoNumbers2(l1, l2);
   printNode(result);
 
   return 0;
