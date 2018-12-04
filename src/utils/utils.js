@@ -1,10 +1,11 @@
 'use strict';
 
 const TreeNode = require('./TreeNode');
+const ListNode = require('./ListNode');
 
 /**
  * 由数组构建二叉树
- * @param  {number[]} array 
+ * @param  {number[]} array
  * @return {TreeNode}       二叉树的root节点
  */
 const createTree = function (array) {
@@ -56,7 +57,35 @@ const expandTree = function(root) {
     return array;
 }
 
+/**
+ * 由数组构建单链表
+ * @param {number[]} array
+ * @return {ListNode} 单链表头
+ */
+const createSingleLinkedList = function(array) {
+  const length = array.length;
+  if (length === 0) return null;
+  const head = new ListNode(array[0]);
+  let current = head;
+  for(let i=1;i<length;i++) {
+    let node = new ListNode(array[i]);
+    current.next = node;
+    current = node;
+  }
+  return head;
+}
+const expandSingleLinkedList2Array = function(head) {
+  let current = head;
+  const result = [];
+  while(current) {
+    result.push(current.val);
+    current = current.next;
+  }
+  return result;
+}
 module.exports = {
     createTree,
     expandTree,
+    createSingleLinkedList,
+    expandSingleLinkedList2Array,
 }
