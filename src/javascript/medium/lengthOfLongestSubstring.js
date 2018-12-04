@@ -21,7 +21,6 @@ let lengthOfLongestSubstring1 = function (s) {
         return s.length;
     }
     let maxlen = 0;
-    let index = 0;
     let j = 0;
     let map = new Map();
     for (let i=0; i<length; i++) {
@@ -36,7 +35,6 @@ let lengthOfLongestSubstring1 = function (s) {
         }
         if (j-i > maxlen) {
             maxlen = j-i;
-            index = i;
         }
     }
 
@@ -46,7 +44,7 @@ let lengthOfLongestSubstring2 = function (s) {
     if (s.length < 2) {
         return s.length;
     }
-    let start = 0, 
+    let start = 0,
         end = 0,
         maxlen = 0,
         len = s.length,
