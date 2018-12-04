@@ -1,16 +1,27 @@
 ### 题目说明
 > Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+>
 >  You may assume that each input would have exactly one solution, and you may not use the same element twice.
+>
 >  Example:
+>
 >  Given nums = [2, 7, 11, 15], target = 9,
+>
 >  Because nums[0] + nums[1] = 2 + 7 = 9,
+>
 >  return [0, 1].
->------
+>
+> ----
 > 给定一个整数数组和一个指定的target值，返回数组中两个元素的和为target值的两个元素的索引。
+>
 > 假设任何一个输入都只有一个解，相同的元素不能使用两次。
+>
 > 例如
+>
 > 给定一个数组 `nums=[2,7,11,15],target=9`
+>
 > 因为`nums[0] + nums[1] = 2 + 7 = 9`
+>
 > 所以，返回 `[0,1]`
 
 ### 难易程度：简单
