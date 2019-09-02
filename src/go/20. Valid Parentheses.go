@@ -63,21 +63,21 @@ func isValid(s string) bool {
 		if i == 0 {
 			arr[p] = c
 			p++
-		} else {
-			if p == 0 {
-				arr[p] = c
-				p++
-				continue
-			}
-			smp := symbolMap[arr[p-1]]
-			if (sm + smp) == 0 {
-				p--
-				arr[p] = 0
-				continue
-			}
+			continue
+		}
+		if p == 0 {
 			arr[p] = c
 			p++
+			continue
 		}
+		smp := symbolMap[arr[p-1]]
+		if (sm + smp) == 0 {
+			p--
+			arr[p] = 0
+			continue
+		}
+		arr[p] = c
+		p++
 	}
 	if arr[0] == 0 {
 		return true
