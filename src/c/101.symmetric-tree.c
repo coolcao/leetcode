@@ -61,16 +61,10 @@ struct TreeNode {
 bool compare(struct TreeNode *node1, struct TreeNode *node2) {
   if (node1 == NULL && node2 == NULL) return true;
 
-  if (node1 != NULL && node2 != NULL) {
-    if (node1->val == node2->val) {
-      return compare(node1->left, node2->right) &&
-             compare(node1->right, node2->left);
-    } else {
-      return false;
-    }
-  }
+  if (node1 == NULL || node2 == NULL) return false;
 
-  return false;
+  return (node1->val == node2->val && compare(node1->left, node2->right) && compare(node1->right, node2->left));
+
 }
 
 bool isSymmetric(struct TreeNode *root) {
