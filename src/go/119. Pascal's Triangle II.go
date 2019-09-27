@@ -72,14 +72,41 @@ func getRow2(rowIndex int) []int {
 			}
 		}
 		pre, current = current, pre
-		fmt.Printf("pre: %v\n", pre)
-		fmt.Printf("current: %v\n", current)
 	}
 	return pre
 }
 
+func getRow3(rowIndex int) []int {
+	length := rowIndex + 1
+	nums := make([]int, length*2)
+	pre := nums[:length]
+
+	pre[0], pre[rowIndex] = 1, 1
+	if rowIndex == 0 || rowIndex == 1 {
+		return pre
+	}
+
+	pre[1] = 1
+	current := nums[length:]
+	current[0], current[rowIndex] = 1, 1
+	for row := 2; row <= rowIndex; row++ {
+		for i := 1; i <= row; i++ {
+			if i == row {
+				current[i] = 1
+			} else {
+				current[i] = pre[i] + pre[i-1]
+			}
+		}
+		pre, current = current, pre
+	}
+
+	return pre
+}
+
 func main() {
-	rowIndex := 5
-	result := getRow2(rowIndex)
-	fmt.Printf("result: %v\n", result)
+	rowIndex := 9
+	result2 := getRow2(rowIndex)
+	result3 := getRow3(rowIndex)
+	fmt.Printf("result2: %v\n", result2)
+	fmt.Printf("result3: %v\n", result3)
 }
