@@ -12,6 +12,8 @@
 示例：
 输入：[1,8,6,2,5,4,8,3,7]
 输出：49
+
+难度：中等
 */
 package main
 
@@ -33,18 +35,20 @@ func max(a, b int, min bool) int {
 func maxArea(height []int) int {
 	length := len(height)
 	start, end := 0, length-1
-	pre, next := start, end
-	maxArea := max(height[0], height[length-1], true) * (length - 1)
+	preStartHeight, preEndHeight := start, end
+	maxArea := max(height[start], height[end], true) * end
 
 	for start < end {
 		hstart, hend := height[start], height[end]
-		if hstart < height[pre] {
-			pre = start
+		// 由于“长度”这个变量是不断变小的，即end-start不断变小
+		// 因此这里只需要取大的Height即可。下面end 也同理
+		if hstart < height[preStartHeight] {
+			preStartHeight = start
 			start++
 			continue
 		}
-		if hend < height[next] {
-			next = end
+		if hend < height[preEndHeight] {
+			preEndHeight = end
 			end--
 			continue
 		}
