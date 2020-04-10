@@ -28,6 +28,8 @@ Could you do it in-place with O(1) extra space?
 
 package main
 
+import "fmt"
+
 // @lc code=start
 func rotate(nums []int, k int) {
 	length := len(nums)
@@ -49,10 +51,31 @@ func rotate(nums []int, k int) {
 	}
 }
 
-// func main() {
-// 	nums := []int{1, 2, 3, 4, 5, 6, 7}
-// 	k := 3
-// 	rotate(nums, k)
-// }
+func rotate2(nums []int, k int) {
+	length := len(nums)
+	if k >= length {
+		k = k % length
+	}
+	if k == 0 {
+		return
+	}
+	tmp := make([]int, length)
+	for i := 0; i < k; i++ {
+		tmp[i] = nums[length-k+i]
+	}
+	for i := 0; i < length-k; i++ {
+		tmp[k+i] = nums[i]
+	}
+	for i := 0; i < length; i++ {
+		nums[i] = tmp[i]
+	}
+}
+
+func main() {
+	nums := []int{1, 2, 3, 4, 5, 6, 7}
+	k := 3
+	rotate(nums, k)
+	fmt.Printf("%v\n", nums)
+}
 
 // @lc code=end
