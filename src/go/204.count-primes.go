@@ -14,6 +14,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
 // coutPrimes 计算n之内的素数个数
@@ -43,7 +44,11 @@ func countPrimes(n int) int {
 	return count
 }
 
-// 采用链表形式进行筛选，减少删除操作开销
+// ------------------------------采用链表形式进行筛选--------------------
+// 使用链表并不能提高筛选速度，相反，使用链表的方式速度是非常低的，就本题而言。
+// 因为判断素数是有数理逻辑的，链表由于没有下标，只能遍历，当数据量很大时，效率会非常慢。甚至比一般判断素数方法还慢。
+// 上面方法，使用数组，虽然数组的删除操作会很低效，但是可以利用其数理逻辑与下标的对应关系，跳过很多不必要的判断。
+// 你品，你细品。
 type ListNode struct {
 	Val  int       `json:"val"`
 	Next *ListNode `json:"next"`
@@ -86,8 +91,39 @@ func countPrimes2(n int) int {
 	}
 	return count
 }
+
+// --------------------------- 最原始的判断方法------------------------
+func isPrimes(n int) bool {
+	if n < 2 {
+		return false
+	}
+	for i := 2; i*i <= n; i++ {
+		if n%i == 0 {
+			return false
+		}
+	}
+	return true
+}
+func countPrimes3(n int) int {
+	if n <= 2 {
+		return 0
+	}
+	count := 0
+	for i := 2; i < n; i++ {
+		if isPrimes(i) {
+			count++
+		}
+	}
+	return count
+}
 func main() {
-	n := 499979
-	fmt.Println(countPrimes(n))
-	fmt.Println(countPrimes2(n))
+	n := 138331
+	fmt.Println(time.Now().UnixNano())
+	countPrimes(n)
+	fmt.Println(time.Now().UnixNano())
+	countPrimes2(n)
+	fmt.Println(time.Now().UnixNano())
+	countPrimes3(n)
+	fmt.Println(time.Now().UnixNano())
+
 }
