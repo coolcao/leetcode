@@ -7,10 +7,6 @@
 // @lc code=start
 package main
 
-import "fmt"
-
-var compare [][]*TreeNode
-
 // TreeNode 树节点
 type TreeNode struct {
 	Val   int
@@ -18,6 +14,7 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
+// 创建数节点
 func createNode(num interface{}) *TreeNode {
 	if num == nil {
 		return nil
@@ -28,6 +25,7 @@ func createNode(num interface{}) *TreeNode {
 	return node
 }
 
+// 由数组构建二叉树
 func createTreeFromArray(nums []interface{}) *TreeNode {
 	if len(nums) == 0 {
 		return nil
@@ -67,13 +65,6 @@ func lowestCommonAncestor(root, p, q *TreeNode) *TreeNode {
 	}
 	return root
 
-}
-
-func main() {
-	nums := []interface{}{6, 2, 8}
-	root := createTreeFromArray(nums)
-	node := lowestCommonAncestor(root, nil, nil)
-	fmt.Printf("%v\n", node)
 }
 
 // @lc code=end
