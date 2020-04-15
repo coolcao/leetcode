@@ -98,25 +98,29 @@ func helper(node *TreeNode, sum int, count *int) {
 	helper(node.Left, sum-node.Val, count)
 	helper(node.Right, sum-node.Val, count)
 }
+func path(root *TreeNode, sum int, count *int) {
+	helper(root, sum, count)
+	if root.Left != nil {
+		path(root.Left, sum, count)
+	}
+	if root.Right != nil {
+		path(root.Right, sum, count)
+	}
+}
 func pathSum(root *TreeNode, sum int) int {
 	count := 0
 	if root == nil {
 		return count
 	}
-	helper(root, sum, &count)
-	if root.Left != nil {
-		helper(root.Left, sum, &count)
-	}
-	if root.Right != nil {
-		helper(root.Right, sum, &count)
-	}
+
+	path(root, sum, &count)
 
 	return count
 }
 
 func main() {
 	nums := []interface{}{10, 5, -3, 3, 2, nil, 11, 3, -2, nil, 1}
-	sum := 1
+	sum := 6
 	root := createTreeFromArray(nums)
 	c := pathSum(root, sum)
 	fmt.Printf("%d\n", c)
