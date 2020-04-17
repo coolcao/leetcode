@@ -69,6 +69,9 @@ func createTreeFromArray(nums []int) *TreeNode {
 			nodes = append(nodes, node)
 		}
 		current = nodes[i/2]
+		if current == nil {
+			current = nodes[i/2+1]
+		}
 	}
 
 	return root
