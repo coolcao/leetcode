@@ -7,10 +7,10 @@
  *
  * algorithms
  * Easy (37.49%)
- * Likes:    189
- * Dislikes: 686
- * Total Accepted:    71.3K
- * Total Submissions: 190.1K
+ * Likes:    210
+ * Dislikes: 717
+ * Total Accepted:    74.8K
+ * Total Submissions: 198.7K
  * Testcase Example:  '"Hello, my name is John"'
  *
  * Count the number of segments in a string, where a segment is defined to be a
@@ -29,49 +29,63 @@ package main
 
 import "fmt"
 
-// import (
-// 	"fmt"
-// 	"strings"
-// )
-
-func main() {
-	s := "a, b, c"
-	fmt.Printf("count: %d\n", countSegments(s))
-}
-
 // @lc code=start
-// func countSegments(s string) int {
-// 	ss := strings.Split(s, " ")
-// 	count := 0
-// 	for i := 0; i < len(ss); i++ {
-// 		if ss[i] != "" {
-// 			count++
-// 		}
-// 	}
-// 	return count
-// }
-
+func isSpace(c byte) bool {
+	return c == ' '
+}
 func countSegments(s string) int {
-	chars := []rune(s)
-	length := len(chars)
+	length := len(s)
 	if length == 0 {
 		return 0
 	}
-	space := rune(' ')
-	pre := chars[0]
+	// 记录前一个位置是否是空格
 	count := 0
+	pre := true
 	for i := 0; i < length; i++ {
-		c := chars[i]
-		if i == length-1 && c != space {
+		current := isSpace(s[i])
+		if !pre && current {
 			count++
 		}
-		if c == space && pre != space {
-			count++
-		}
-
-		pre = c
+		pre = current
+	}
+	if !pre {
+		count++
 	}
 	return count
 }
 
 // @lc code=end
+
+func main() {
+	type TestCase struct {
+		Case   string
+		Except int
+	}
+	cases := []*TestCase{
+		&TestCase{Case: "", Except: 0},
+		&TestCase{Case: " ", Except: 0},
+		&TestCase{Case: "  ", Except: 0},
+		&TestCase{Case: "        ", Except: 0},
+		&TestCase{Case: "a", Except: 1},
+		&TestCase{Case: " a", Except: 1},
+		&TestCase{Case: " a ", Except: 1},
+		&TestCase{Case: "a b", Except: 2},
+		&TestCase{Case: " a b", Except: 2},
+		&TestCase{Case: " a b ", Except: 2},
+		&TestCase{Case: " a         b ", Except: 2},
+		&TestCase{Case: "abc", Except: 1},
+		&TestCase{Case: "a bc", Except: 2},
+		&TestCase{Case: "a b c", Except: 3},
+		&TestCase{Case: "a b c ", Except: 3},
+		&TestCase{Case: " Hello, My Good Boy", Except: 4},
+		&TestCase{Case: " Hello, My Good Boy         ", Except: 4},
+		&TestCase{Case: "a	bc", Except: 1},
+	}
+	for _, tc := range cases {
+		r := countSegments(tc.Case)
+		if tc.Except != r {
+			fmt.Printf("%s want %d, but got %d\n", tc.Case, tc.Except, r)
+		}
+	}
+	fmt.Println("all cases over!")
+}
