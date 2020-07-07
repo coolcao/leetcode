@@ -6,11 +6,11 @@
  * https://leetcode.com/problems/sort-integers-by-the-number-of-1-bits/description/
  *
  * algorithms
- * Easy (68.90%)
- * Likes:    106
+ * Easy (68.97%)
+ * Likes:    107
  * Dislikes: 10
- * Total Accepted:    11.2K
- * Total Submissions: 16.3K
+ * Total Accepted:    11.3K
+ * Total Submissions: 16.4K
  * Testcase Example:  '[0,1,2,3,4,5,6,7,8]'
  *
  * Given an integer array arr. You have to sort the integers in the array in
@@ -75,42 +75,38 @@
 package main
 
 import (
-	"fmt"
 	"sort"
 )
 
 func main() {
-	arr := []int{1111, 7644, 1107, 6978, 8742, 1, 7403, 7694, 9193, 4401, 377, 8641, 5311, 624, 3554, 6631}
-	res := sortByBits(arr)
-	fmt.Printf("%v\n", res)
+	arr := []int{2, 3, 5, 7, 11, 13, 17, 19}
+	sortByBits(arr)
 }
 
 // @lc code=start
-func getOnes(num int) int {
-	sum := 0
+
+type SortedByOneBits []int
+
+func (a SortedByOneBits) Len() int      { return len(a) }
+func (a SortedByOneBits) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+func (a SortedByOneBits) Less(i, j int) bool {
+	ib, jb := getOneBits(a[i]), getOneBits(a[j])
+	if ib == jb {
+		return a[i] < a[j]
+	}
+	return ib < jb
+}
+func getOneBits(num int) int {
+	mask := 1
+	count := 0
 	for num > 0 {
-		sum += num & 1
+		count += (num & mask)
 		num = num >> 1
 	}
-	return sum
+	return count
 }
-
-type IntSlice []int
-
-func (s IntSlice) Len() int      { return len(s) }
-func (s IntSlice) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
-func (s IntSlice) Less(i, j int) bool {
-	id, jd := getOnes(s[i]), getOnes(s[j])
-	if id < jd {
-		return true
-	} else if id == jd {
-		return s[i] < s[j]
-	}
-	return false
-}
-
 func sortByBits(arr []int) []int {
-	sort.Sort(IntSlice(arr))
+	sort.Sort(SortedByOneBits(arr))
 	return arr
 }
 
