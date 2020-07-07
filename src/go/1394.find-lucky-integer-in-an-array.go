@@ -6,11 +6,11 @@
  * https://leetcode.com/problems/find-lucky-integer-in-an-array/description/
  *
  * algorithms
- * Easy (68.74%)
- * Likes:    91
- * Dislikes: 5
- * Total Accepted:    16.8K
- * Total Submissions: 24.9K
+ * Easy (68.72%)
+ * Likes:    168
+ * Dislikes: 7
+ * Total Accepted:    27.5K
+ * Total Submissions: 42.3K
  * Testcase Example:  '[2,2,3,4]'
  *
  * Given an array of integers arr, a lucky integer is an integer which has a
@@ -72,29 +72,29 @@ package main
 import "fmt"
 
 func main() {
-	arr := []int{7, 7, 7, 7, 7, 7, 7}
-	lucky := findLucky(arr)
-	fmt.Printf("%v\n", lucky)
+	arr := []int{2, 2, 2, 3, 3}
+	num := findLucky(arr)
+	fmt.Printf("%v\n", num)
 }
 
 // @lc code=start
 func findLucky(arr []int) int {
-	length := len(arr)
-	tmp := make([]int, length+1)
-
-	for _, v := range arr {
-		if v > length {
-			continue
+	userd := [501]int{}
+	min, max := 500, 1
+	for _, n := range arr {
+		userd[n]++
+		if n > max {
+			max = n
 		}
-		tmp[v]++
+		if n < min {
+			min = n
+		}
 	}
-
-	for i := length; i > 0; i-- {
-		if tmp[i] == i {
+	for i := max; i >= min; i-- {
+		if userd[i] == i {
 			return i
 		}
 	}
-
 	return -1
 }
 
