@@ -6,11 +6,11 @@
  * https://leetcode.com/problems/how-many-numbers-are-smaller-than-the-current-number/description/
  *
  * algorithms
- * Easy (84.66%)
- * Likes:    340
- * Dislikes: 10
- * Total Accepted:    43.4K
- * Total Submissions: 51.3K
+ * Easy (84.60%)
+ * Likes:    636
+ * Dislikes: 20
+ * Total Accepted:    82K
+ * Total Submissions: 96.1K
  * Testcase Example:  '[8,1,2,2,3]'
  *
  * Given the array nums, for each nums[i] find out how many numbers in the
@@ -60,32 +60,33 @@ package main
 import "fmt"
 
 func main() {
-	nums := []int{7, 7, 7, 7}
-	res := smallerNumbersThanCurrent(nums)
-	fmt.Printf("res: %v\n", res)
+	nums := []int{8, 1, 2, 2, 3}
+	ans := smallerNumbersThanCurrent(nums)
+	fmt.Printf("%v\n", ans)
 }
 
 // @lc code=start
 func smallerNumbersThanCurrent(nums []int) []int {
-	length := len(nums)
-	tmp := make([]int, 101)
-	for _, v := range nums {
-		tmp[v]++
-	}
-	result := []int{}
-	sum := 0
-	for i := 0; i <= 100; i++ {
-		if tmp[i] == 0 {
-			continue
+	used := [101]int{}
+	min, max := 100, 0
+	for _, n := range nums {
+		used[n]++
+		if n > max {
+			max = n
 		}
-		ext := tmp[i]
-		tmp[i] = sum
-		sum += ext
+		if n < min {
+			min = n
+		}
 	}
-	for i := 0; i < length; i++ {
-		result = append(result, tmp[nums[i]])
+	ans := []int{}
+	for _, n := range nums {
+		count := 0
+		for i := min; i < n; i++ {
+			count += used[i]
+		}
+		ans = append(ans, count)
 	}
-	return result
+	return ans
 }
 
 // @lc code=end
