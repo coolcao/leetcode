@@ -38,44 +38,64 @@
  */
 package main
 
-import (
-	"sort"
-)
+import "fmt"
 
 func main() {
 	arr1, arr2 := []int{2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19}, []int{2, 1, 4, 3, 9, 6}
-	relativeSortArray(arr1, arr2)
+	result := relativeSortArray(arr1, arr2)
+	fmt.Printf("%v\n", result)
 }
 
 // @lc code=start
-var hmap map[int]int
+// var hmap map[int]int
 
-type SortByArr2 []int
+// type SortByArr2 []int
 
-func (a SortByArr2) Len() int      { return len(a) }
-func (a SortByArr2) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
-func (a SortByArr2) Less(i, j int) bool {
-	ivalue, iok := hmap[a[i]]
-	jvalue, jok := hmap[a[j]]
-	if iok && jok {
-		return ivalue < jvalue
-	}
-	if iok {
-		return true
-	}
-	if jok {
-		return false
-	}
-	return a[i] < a[j]
-}
+// func (a SortByArr2) Len() int      { return len(a) }
+// func (a SortByArr2) Swap(i, j int) { a[i], a[j] = a[j], a[i] }
+// func (a SortByArr2) Less(i, j int) bool {
+// 	ivalue, iok := hmap[a[i]]
+// 	jvalue, jok := hmap[a[j]]
+// 	if iok && jok {
+// 		return ivalue < jvalue
+// 	}
+// 	if iok {
+// 		return true
+// 	}
+// 	if jok {
+// 		return false
+// 	}
+// 	return a[i] < a[j]
+// }
+
+// func relativeSortArray(arr1 []int, arr2 []int) []int {
+// 	hmap = map[int]int{}
+// 	for i, a2 := range arr2 {
+// 		hmap[a2] = i + 1
+// 	}
+// 	sort.Sort(SortByArr2(arr1))
+// 	return arr1
+// }
 
 func relativeSortArray(arr1 []int, arr2 []int) []int {
-	hmap = map[int]int{}
-	for i, a2 := range arr2 {
-		hmap[a2] = i + 1
+	count := [1001]int{}
+	result := []int{}
+	for _, num := range arr1 {
+		count[num]++
 	}
-	sort.Sort(SortByArr2(arr1))
-	return arr1
+	for _, num := range arr2 {
+		for count[num] > 0 {
+			result = append(result, num)
+			count[num]--
+		}
+	}
+	for i, c := range count {
+		for c > 0 {
+			result = append(result, i)
+			c--
+		}
+	}
+	return result
 }
 
 // @lc code=end
