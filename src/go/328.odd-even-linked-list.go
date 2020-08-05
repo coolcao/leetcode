@@ -85,43 +85,61 @@ func genList(nums []int, idx int) *ListNode {
 
 // @lc code=start
 
+// func oddEvenList(head *ListNode) *ListNode {
+// 	// 空链表，或者只有一个或两个节点的链表不做任何操作
+// 	if head == nil || head.Next == nil || head.Next.Next == nil {
+// 		return head
+// 	}
+
+// 	c := 2
+
+// 	odd, even := head, head.Next
+
+// 	current := even.Next
+
+// 	for current != nil {
+// 		c++
+// 		if c%2 == 1 {
+// 			// 奇数，调到前面
+// 			oddNext := odd.Next
+// 			odd.Next = current
+
+// 			currentNext := current.Next
+// 			current.Next = oddNext
+// 			current = currentNext
+
+// 			odd = odd.Next
+// 			even.Next = nil
+// 		} else {
+// 			// 偶数，拼到后面
+// 			currentNext := current.Next
+
+// 			even.Next = current
+// 			even = even.Next
+// 			even.Next = nil
+
+// 			current = currentNext
+// 		}
+// 	}
+
+// 	return head
+// }
 func oddEvenList(head *ListNode) *ListNode {
-	// 空链表，或者只有一个或两个节点的链表不做任何操作
-	if head == nil || head.Next == nil || head.Next.Next == nil {
+	if head == nil {
 		return head
 	}
-
-	c := 2
-
 	odd, even := head, head.Next
+	evenHead := even
 
-	current := even.Next
+	// 取出偶数位置的节点，组成一个新链表
+	for even != nil && even.Next != nil {
+		odd.Next = even.Next
+		odd = odd.Next
 
-	for current != nil {
-		c++
-		if c%2 == 1 {
-			// 奇数，调到前面
-			oddNext := odd.Next
-			odd.Next = current
-
-			currentNext := current.Next
-			current.Next = oddNext
-			current = currentNext
-
-			odd = odd.Next
-			even.Next = nil
-		} else {
-			// 偶数，拼到后面
-			currentNext := current.Next
-
-			even.Next = current
-			even = even.Next
-			even.Next = nil
-
-			current = currentNext
-		}
+		even.Next = odd.Next
+		even = even.Next
 	}
-
+	odd.Next = evenHead
 	return head
 }
 
