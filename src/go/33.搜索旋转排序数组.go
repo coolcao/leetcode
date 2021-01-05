@@ -45,8 +45,8 @@ import (
 )
 
 func main() {
-	nums := []int{4, 5, 6, 7, 0, 1, 2}
-	target := 0
+	nums := []int{5, 1, 3}
+	target := 5
 	idx := search(nums, target)
 	fmt.Printf("%d\n", idx)
 }
@@ -79,15 +79,17 @@ func _search(nums []int, start, end int, target int) int {
 		return -1
 	}
 	mid := (start + end) / 2
+
 	// 升序区间start, end
 	ascStart, ascEnd := start, mid
 	// 剩余区间start, end
 	nStart, nEnd := mid+1, end
-	if nums[mid] < nums[end] {
-		ascStart = mid
-		ascEnd = end
+
+	if nums[nStart] <= nums[nEnd] {
+		ascStart = nStart
+		ascEnd = nEnd
 		nStart = start
-		nEnd = mid - 1
+		nEnd = mid
 	}
 
 	// 判断target是否在升序区间内，如果在，直接二分
