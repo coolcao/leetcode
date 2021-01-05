@@ -25,6 +25,7 @@ package main
 
 import "fmt"
 
+// @lc code=start
 func binarySearch(nums []int, start, end int, target int) int {
 	if start > end {
 		return -1
@@ -77,11 +78,11 @@ func search(nums []int, target int) int {
 	return toSearch(nums, 0, length-1, target)
 }
 
+// @lc code=end
+
 func main() {
 	nums := []int{4, 5, 6, 7, 0, 1, 2}
 	target := 0
 	idx := search(nums, target)
 	fmt.Printf("idx: %d\n", idx)
 }
-
-// @lc code=end
